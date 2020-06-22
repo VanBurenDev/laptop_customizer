@@ -1,18 +1,25 @@
 import React from 'react'
+import slugify from 'slugify'
 
-export default function Options() {
+const USCurrencyFormat = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD'
+});
+
+export default function Options(props) {
+  const itemHash = slugify(JSON.stringify(props.item))
   return (
     <div key={itemHash} className="feature__item">
       <input
         type="radio"
         id={itemHash}
         className="feature__option"
-        name={slugify(feature)}
-        checked={item.name === this.state.selected[feature].name}
-        onChange={e => this.updateFeature(feature, item)}
+        name={slugify(props.featureName)}
+        checked={props.item.name === props.selected[props.featureName].name}
+        onChange={e => props.updateFeature(props.featureName, props.item)}
       />
       <label htmlFor={itemHash} className="feature__label">
-        {item.name} ({USCurrencyFormat.format(item.cost)})
+        {props.item.name} ({USCurrencyFormat.format(props.item.cost)})
       </label>
     </div>
   );
