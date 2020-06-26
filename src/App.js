@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
-import Features from './Features';
-import Summary from './Summary';
-import Total from './Total';
-
-import './App.css';
+import React, {Component} from 'react'
+import Header from './Header'
+import Form from './Form'
+import Section from './Section'
+import './App.css'
 
 export default class App extends Component {
   state = {
@@ -29,7 +28,6 @@ export default class App extends Component {
 
   updateFeature = (feature, newValue) => {
     const selected = Object.assign({}, this.state.selected);
-    console.log(selected)
     selected[feature] = newValue;
     this.setState({
       selected
@@ -37,43 +35,18 @@ export default class App extends Component {
   };
 
   render() {
-    
     return (
       <div className="App">
-        <header>
-          <h1>ELF Computing | Laptops</h1>
-        </header>
+        <Header />
         <main>
-          <form className="main__form">
-            <h2>Customize your laptop</h2>
-            {Object.keys(this.props.features).map((feature, idx) => {
-            const featureHash = feature + '-' + idx
-            return <Features
-              updateFeature = {() => this.updateFeature()}
-              selected = {this.state.selected}
-              idx={featureHash}
-              feature = {this.props.features[feature]}
-              featureName = {feature}
-            />})}
-          </form>
-          <section className="main__summary">
-            <h2>Your cart</h2>
-            {Object.keys(this.state.selected).map((feature, idx) => {
-            const featureHash = feature + '-' + idx
-            const selectedOption = this.state.selected[feature]
-            return <Summary
-              idx = {featureHash}
-              featureName = {feature}
-              selectedOption ={selectedOption}
-              />})}
-            
-            <div className="summary__total">
-              <div className="summary__total__label">Total</div>
-              <Total
-              selected = {this.state.selected}
-               />
-            </div>
-          </section>
+          <Form 
+            allFeatures={this.props.features} 
+            selected={this.state.selected}
+            updateFeature = {this.updateFeature}
+          />
+          <Section 
+            selected={this.state.selected} 
+          />    
         </main>
       </div>
     );
